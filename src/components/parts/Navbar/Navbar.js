@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BiLogIn,BiCart } from 'react-icons/bi'
-import { Link, useNavigate } from 'react-router-dom'
+import { BiLogIn, BiCart } from 'react-icons/bi'
 import Card from '../Card/Card'
 import { CgProfile } from "react-icons/cg"
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -34,17 +33,19 @@ const Navbar = (props) => {
             aria-label="Search" />
 
         </form>
-        <a href="/cart" className='nav-link text-secondary'> <BiCart size={30} />
-        {getCartItems? <span style={{color:'blue'}}>{getCartItems.length}</span>: 0}  </a>
-
+       <div style={{paddingRight:"1rem"}}>
+       <BiCart size={30} onClick={()=> props.setTemp(!props.temp)} id="bicart"  />
+        {getCartItems? <span style={{color:'blue'}}>{getCartItems.length}</span>: 0}  
+        
+       </div>
         {props.getEmail && props.getPassword ?
           <div style={{ display: "flex", alignItems: "center" }}>
-           
-              <DropdownButton id="dropdown-basic-button" title={`${props.getUser[0].name}`}>
-                <Dropdown.Item href={`/${getUser[0]._id}`}>Profile</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3" onClick={handleClick}>Sign Out</Dropdown.Item>
-              </DropdownButton> 
+
+            <DropdownButton id="dropdown-basic-button" title={`${props.getUser[0].name}`}>
+              <Dropdown.Item href={`/${getUser[0]._id}`}>Profile</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+              <Dropdown.Item href="#/action-3" onClick={handleClick}>Sign Out</Dropdown.Item>
+            </DropdownButton>
           </div> :
           <a href="/login" className='nav-link text-secondary'> <BiLogIn size={30} /> </a>}
 
