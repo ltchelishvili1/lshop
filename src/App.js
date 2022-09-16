@@ -13,11 +13,9 @@ import { useEffect, useRef, useState } from 'react';
 import Login from './components/parts/Login/Login';
 import Register from './components/parts/Register/Register';
 import Card from './components/parts/Card/Card';
-import LoginWithLocalStorage from './components/LoginWithLocalStorage';
 import Cart from './components/parts/Cart/Cart';
 import Profile from './components/parts/Profile/Profile'
 import CartOverlay from './components/CartOverlay/CartOverlay';
-import Pagination from './components/parts/Pagination/Pagination';
 export function useForceUpdate() {
   const [value, setValue] = useState(0);
   return () => setValue(value => value + 1);
@@ -26,12 +24,10 @@ export function useForceUpdate() {
 
 function App() {
   const [page,setPage] = useState(1)
-  console.log(page)
   const [postsPerPAge, setPostsPerPage] = useState(9)
   const indexofLastPost = page * postsPerPAge
   
   const indexofFirstPost = indexofLastPost - postsPerPAge
-  console.log(indexofFirstPost)
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(Number.MAX_SAFE_INTEGER)
   const forceUpdate = useForceUpdate()
@@ -48,11 +44,13 @@ function App() {
   const [curSearch, setCurSearch] = useState("")
   const [temp, setTemp] = useState(false)
   const getCartTotal = () => {
+    if(getCartItems){
     return getCartItems
       .reduce((acc, value) => {
         return acc + value.price * value.quantity;
       }, 0)
       .toFixed(2);
+    }
   };
   function filterByPrice() {
     setSearchResult(
@@ -289,8 +287,7 @@ function App() {
           <Route path='/login' element={<Login loggedInUser={loggedInUser} getEmail={getEmail} getPassword={getPassword} users={users} />} />
           <Route path='/register' element={<Register users={users} />} />
         </Routes>
-       
-        <LoginWithLocalStorage />
+    
 
       </BrowserRouter>
     </div>
